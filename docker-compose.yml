@@ -1,0 +1,28 @@
+version: '2'
+services:
+  dev:
+    build: .
+    ports:
+     - "80:80"
+    volumes:
+     - ./src:/var/www/html/blog
+    links:
+      - database
+    environment:
+      NODE_ENV: production
+      HOST_URL: http://localhost/blog
+      MYSQL_HOST: database
+      MYSQL_USER: root
+      MYSQL_PASSWORD: development
+      MYSQL_DATABASE: wordpress-development
+      MYSQL_PORT: 3306
+      EMAIL_USER: foo
+      EMAIL_PASS: bar
+
+  database:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: wordpress-development
+      MYSQL_ROOT_PASSWORD: development
